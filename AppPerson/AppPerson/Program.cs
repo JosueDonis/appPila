@@ -4,10 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
+//using System;
+//using System.Collections.Generic;
+//using System.Linq;
+//using System.Text;
 
 namespace AppPerson
 {
-    public class Program
+    public class Pila
     {
         public enum State
         {
@@ -34,7 +38,7 @@ namespace AppPerson
             if (string.IsNullOrEmpty(input))
             {
                 Console.Clear();
-                Console.WriteLine("¡INGRESE UNA CANTIDAD CORRECTA PRESIONE ENTER!");
+                Console.WriteLine("¡Ingrese una cantidad correcta presione enter!");
                 Console.ReadKey();
                 AddQuantityPerson();
                 return;
@@ -45,16 +49,17 @@ namespace AppPerson
             if (size < 1)
             {
                 Console.Clear();
-                Console.WriteLine("¡INGRESE UNA CANTIDAD CORRECTA PRESIONE ENTER!");
+                Console.WriteLine("¡Ingrese una cantidad correcta presione enter!");
                 Console.ReadKey();
                 AddQuantityPerson();
                 return;
             }
 
-            if(!addElement)
+            if (!addElement)
             {
                 persons = new string[size];
-            }else
+            }
+            else
             {
                 addSpaceArray(size);
             }
@@ -68,13 +73,14 @@ namespace AppPerson
             do
             {
                 Console.Clear();
-                Console.Write("1. INGRESAR DATOS");
-                Console.Write("\n2. MOSTRAR DATOS");
-                Console.Write("\n3. SACAR ULTIMO ELEMENTO");
-                Console.Write("\n4. ORDENAR EDADES INGRESADAS");
-                Console.Write("\n5. SALIR PRESIONE (SI)");
-                Console.Write($"\n6. CANTIDAD ELEMENTOS A INGRESAR '{size}'");
-                Console.Write("\nSELECCIONE LA OPCIÓN: ");
+                Console.Write("1. Ingresar datos");
+                Console.Write("\n2. Mostrar datos");
+                Console.Write("\n3. Eliminar el ultimo elemento");
+                Console.Write("\n4. Ordenar el listado en forma ascendente");
+                Console.Write("\n5. Buscar edad especifica");
+                Console.Write("\n6. Sí desea salir presione 'SI'");
+                Console.Write($"\n7. Cantidad de elementos a ingresar '{size}'");
+                Console.Write("\nIngrese la opción: ");
                 optionSelected = Console.ReadLine();
 
                 if (isNumber(optionSelected))
@@ -88,6 +94,13 @@ namespace AppPerson
 
         public static void typeOptionSelected(State option)
         {
+            if (hasEmptyArray() && option != State.SAVE)
+            {
+                Console.Clear();
+                Console.WriteLine("¡La lista esta vacia!");
+                messageBackMain();
+                return;
+            }
             switch (option)
             {
                 case State.SAVE:
@@ -99,32 +112,24 @@ namespace AppPerson
                     else
                     {
                         Console.Clear();
-                        Console.WriteLine("¡ESTA LLENO LA PILA DE ELEMENTOS SI DESEA INGRESAR MAS DATOS PRESIONE ENTER!");
+                        Console.WriteLine("¡Esta lleno la pila de elementos si desea ingresar más datos presione enter!");
                         Console.ReadKey();
                         AddQuantityPerson(true);
                     }
                     break;
                 case State.GET:
-                    if (hasEmptyArray())
-                    {
-                        Console.Clear();
-                        Console.WriteLine("¡LA LISTA ESTA VACIA!");
-                        messageBackMain();
-                    }
-                    else
-                    {
-                        Console.Clear();
-                        Console.WriteLine("PERSONAS AGREGADAS: ");
-                        getPersons(persons);
-                    }
+                    Console.Clear();
+                    Console.WriteLine("Listado de edades de personas: ");
+                    getPersons(persons);
                     break;
                 case State.ORDER:
                     Console.Clear();
-                    Console.WriteLine("LAS EDADES DE LAS PERSONAS ORDENADOS DE FORMA ASCENDENTE: ");
+                    Console.WriteLine("Personas ordenadas por edades en forma ascendente: ");
                     getOrderBy();
                     break;
                 case State.SEARCH:
-
+                    Console.Clear();
+                    search();
                     break;
                 case State.DELETE:
                     size = size + deleteLastElment();
@@ -136,21 +141,22 @@ namespace AppPerson
         public static void savePerson()
         {
             Console.Clear();
-            Console.Write("INGRESE LA EDAD DE LA PERSONA: ");
+            Console.Write("Ingrese la cantidad de persona: ");
             Person person = new Person();
             var input = Console.ReadLine();
             if (string.IsNullOrEmpty(input))
             {
-                Console.WriteLine($"LA EDAD INGRESADA ES INCORRECTA PRESIONE ENTER!");
+                Console.WriteLine($"La edad ingresada es incorrecta presione enter!");
                 Console.ReadKey();
                 savePerson();
-            }else
+            }
+            else
             {
                 person.age = Convert.ToInt32(input);
 
                 if (person.age < 1 || person.age > 120)
                 {
-                    Console.WriteLine($"LA EDAD INGRESADA ES INCORRECTA PRESIONE ENTER!");
+                    Console.WriteLine($"La edad ingresada es incorrecta presione enter!");
                     Console.ReadKey();
                     savePerson();
                 }
@@ -190,7 +196,7 @@ namespace AppPerson
         {
             for (int i = arr.Length - 1; i >= 0; i--)
             {
-               if(arr[i] != null)
+                if (arr[i] != null)
                 {
                     Console.Write($"{i + 1}: {arr[i]}\n");
                 }
@@ -201,11 +207,11 @@ namespace AppPerson
         public static int deleteLastElment()
         {
             int delete = 0;
-            if(!hasEmptyArray())
+            if (!hasEmptyArray())
             {
-                for (int i = persons.Length-1; i >=0; i--)
+                for (int i = persons.Length - 1; i >= 0; i--)
                 {
-                    if(persons[i] != null && delete == 0)
+                    if (persons[i] != null && delete == 0)
                     {
                         persons[i] = null;
                         delete = 1;
@@ -221,11 +227,11 @@ namespace AppPerson
             Console.Clear();
             if (hasEmptyArray())
             {
-                Console.WriteLine("LA PILA ESTA VACIA, PUEDE INGRESAR NUEVOS DATOS");
+                Console.WriteLine("El listado esta vacio!");
             }
             else
             {
-                Console.WriteLine("EL ÚLTIMO ELEMENTO FUE ELIMINADO");
+                Console.WriteLine("El último elemento fue eliminado con exito!");
             }
 
             messageBackMain();
@@ -233,7 +239,7 @@ namespace AppPerson
 
         public static void messageBackMain()
         {
-            Console.Write("¡PRESIONE ENTER PARA REGRESAR!");
+            Console.Write("¡Presione enter para regresar!");
             Console.ReadKey();
         }
 
@@ -250,7 +256,7 @@ namespace AppPerson
             return counter == persons.Length ? true : false;
         }
 
-        public static void addSpaceArray( int size)
+        public static void addSpaceArray(int size)
         {
             var tempPersons = persons;
             Array.Resize(ref persons, tempPersons.Length + size);
@@ -259,9 +265,9 @@ namespace AppPerson
         public static int counterArray()
         {
             int counter = 0;
-            for (int i = persons.Length-1; i>=0; i--)
+            for (int i = persons.Length - 1; i >= 0; i--)
             {
-                if(persons[i] != null)
+                if (persons[i] != null)
                 {
                     counter++;
                 }
@@ -274,12 +280,12 @@ namespace AppPerson
             string found = "";
             for (int i = 1; i < arr.Length; i++)
             {
-                for (int j = arr.Length-1; j >=i; j--)
+                for (int j = arr.Length - 1; j >= i; j--)
                 {
-                    if(int.Parse(arr[j-1]) > int.Parse(arr[j]))
+                    if (int.Parse(arr[j - 1]) > int.Parse(arr[j]))
                     {
                         found = arr[j - 1];
-                        arr[j-1] = arr[j];
+                        arr[j - 1] = arr[j];
                         arr[j] = found;
                     }
                 }
@@ -294,6 +300,115 @@ namespace AppPerson
             var orderArr = orderByAsc(persons);
             getPersons(orderArr);
         }
-        
+
+        public static string[] find(string input)
+        {
+            string[] found = new string[2];
+            found[0] = "";
+            found[1] = "";
+            for (int i = persons.Length - 1; i >= 0; i--)
+            {
+                if (persons[i].Equals(input))
+                {
+                    found[0] = Convert.ToString(i);
+                    found[1] = persons[i];
+                }
+            }
+            return found;
+        }
+
+        public static void search()
+        {
+            Console.WriteLine("Ingrese la edad a buscar: ");
+            var input = Console.ReadLine();
+            if (String.IsNullOrEmpty(input))
+            {
+                Console.Write($"La edad ingresada es incorrecta presione enter!");
+                Console.ReadKey();
+                search();
+            }
+            else
+            {
+                var person = find(input);
+                if (person[1].Equals(""))
+                {
+                    Console.WriteLine($"No se encontro información de la persona con la edad ingresada: {input}!");
+                }
+                else
+                {
+                    Console.WriteLine($"{int.Parse(person[0]) + 1}°. persona  su edad es de: {person[1]}");
+                }
+                messageBackMain();
+            }
+        }
+
+        //    class Nodo
+        //    {
+        //        public int info;
+        //        public Nodo sig;
+        //    }
+
+        //    private Nodo raiz;
+
+        //    public Pila()
+        //    {
+        //        raiz = null;
+        //    }
+
+        //    public void Insertar(int x)
+        //    {
+        //        Nodo nuevo;
+        //        nuevo = new Nodo();
+        //        nuevo.info = x;
+        //        if (raiz == null)
+        //        {
+        //            nuevo.sig = null;
+        //            raiz = nuevo;
+        //        }
+        //        else
+        //        {
+        //            nuevo.sig = raiz;
+        //            raiz = nuevo;
+        //        }
+        //    }
+
+        //    public int Extraer()
+        //    {
+        //        if (raiz != null)
+        //        {
+        //            int informacion = raiz.info;
+        //            raiz = raiz.sig;
+        //            return informacion;
+        //        }
+        //        else
+        //        {
+        //            return int.MaxValue;
+        //        }
+        //    }
+
+        //    public void Imprimir()
+        //    {
+        //        Nodo reco = raiz;
+        //        Console.WriteLine("Listado de todos los elementos de la pila.");
+        //        while (reco != null)
+        //        {
+        //            Console.Write(reco.info + "-");
+        //            reco = reco.sig;
+        //        }
+        //        Console.WriteLine();
+        //    }
+
+        //    static void Main(string[] args)
+        //    {
+        //        Pila pila1 = new Pila();
+        //        pila1.Insertar(12);
+        //        pila1.Insertar(10);
+        //        pila1.Insertar(1);
+        //        pila1.Imprimir();
+        //        //Console.WriteLine("Extraemos de la pila:" + pila1.Extraer());
+        //        //pila1.Imprimir();
+        //        Console.ReadKey();
+        //    }
+        //}
     }
 }

@@ -1,0 +1,7 @@
+C:\Users\Josue\Documents\Privados\DESARROLLO\AppPerson\AppPerson\obj\Debug\AppPerson.csprojAssemblyReference.cache
+C:\Users\Josue\Documents\Privados\DESARROLLO\AppPerson\AppPerson\obj\Debug\AppPerson.csproj.CoreCompileInputs.cache
+C:\Users\Josue\Documents\Privados\DESARROLLO\AppPerson\AppPerson\bin\Debug\AppPerson.exe.config
+C:\Users\Josue\Documents\Privados\DESARROLLO\AppPerson\AppPerson\bin\Debug\AppPerson.exe
+C:\Users\Josue\Documents\Privados\DESARROLLO\AppPerson\AppPerson\bin\Debug\AppPerson.pdb
+C:\Users\Josue\Documents\Privados\DESARROLLO\AppPerson\AppPerson\obj\Debug\AppPerson.exe
+C:\Users\Josue\Documents\Privados\DESARROLLO\AppPerson\AppPerson\obj\Debug\AppPerson.pdb
